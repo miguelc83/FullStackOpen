@@ -1,51 +1,51 @@
-// The Hello component uses destructuring to extract the 'name' and 'age' properties
-// directly from the props object passed to it.
-const Hello = ({ name, age }) => {
-  // Logs the name and age to the console for debugging purposes.
-  console.log(name, age)
+// Importing the `useState` hook from React to manage state in the functional component.
+import { useState } from 'react'
 
-  // Defines a function to calculate the year of birth based on the current year and the age.
-  // This function uses the 'age' value destructured from props.
-  const bornYear = () => new Date().getFullYear() - age
+// The `Display` component is a simple functional component that uses destructuring
+// to directly access the `counter` prop passed to it.
+const Display = ({ counter }) => <div>{counter}</div>
 
-  // Returns a JSX structure that displays a greeting message and the calculated year of birth.
+// The `Button` component is another functional component that receives props.
+// It uses destructuring to simplify access to `handleClick` and `text` props.
+const Button = (props) => {
   return (
-    <div>
-      <p>
-        Hello {name}, you are {age} years old
-      </p>
-      <p>So you were probably born in {bornYear()}</p>
-    </div>
+    <button onClick={props.handleClick}>
+      {props.text}
+    </button>
   )
 }
 
-// The App component demonstrates the use of destructuring in various contexts.
+// The main `App` component where the application logic resides.
 const App = () => {
-  // Defines a 'person' object with multiple properties, including nested objects and arrays.
-  const person = {  
-    name: 'Arto Hellas', // Name of the person
-    age: 35, // Age of the person
-    hobbies: ['HTML', 'CSS', 'JavaScript'], // Array of hobbies
-    education: { // Nested object representing education details
-      degree: 'Master',
-      major: 'Computer Science',
-      university: 'University of Helsinki',
-      year: 2010
-    },
-  }
+  // Using the `useState` hook to create a state variable `counter` and its updater function `setCounter`.
+  // The initial value of `counter` is set to 0.
+  const [counter, setCounter] = useState(0)
 
-  // Returns a JSX structure that renders the Hello component twice.
-  // The first instance passes hardcoded values, while the second uses destructured properties from the 'person' object.
+  // Function to increment the `counter` state by 1.
+  const increaseByOne = () => setCounter(counter + 1)
+
+  // Function to decrement the `counter` state by 1.
+  const decreaseByOne = () => setCounter(counter - 1)
+
+  // Function to reset the `counter` state to 0.
+  const setToZero = () => setCounter(0)
+
+  // The `App` component returns a JSX structure that renders the `Display` and `Button` components.
+  // The `Display` component shows the current value of `counter`.
+  // The `Button` components are used to trigger the state update functions.
   return (
     <div>
-      <h1>Greetings</h1>
-      {/* Passes hardcoded values to the Hello component. The age is calculated dynamically. */}
-      <Hello name="Maya" age={26 + 10} />
-      {/* Passes destructured properties from the 'person' object to the Hello component. */}
-      <Hello name={person.name} age={person.age} />
+      {/* Passing the `counter` state as a prop to the `Display` component. */}
+      <Display counter={counter} />
+
+      {/* Passing the `increaseByOne` function and button text as props to the `Button` component. */}
+      <Button handleClick={increaseByOne} text="plus" />
+
+      {/* Passing the `decreaseByOne` function and button text as props to the `Button` component. */}
+      <Button handleClick={decreaseByOne} text="minus" />
     </div>
   )
 }
 
-// Exports the App component as the default export of this module.
+// Exporting the `App` component as the default export of this module.
 export default App
