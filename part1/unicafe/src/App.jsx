@@ -17,15 +17,27 @@ const Statistics = ({ positives, neutrals, negatives, allClicks }) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <p>Good: {positives}</p>
-      <p>Neutral: {neutrals}</p>
-      <p>Bad: {negatives}</p>
-      <p>All: {allClicks}</p>
-      <p>Average: {average.toFixed(2)}</p>
-      <p>Positive Percentage: {positivesPct.toFixed(2)} %</p>
+      <StatisticsLine text="Good" value={positives} />
+      <StatisticsLine text="Neutral" value={neutrals} />
+      <StatisticsLine text="Bad" value={negatives} />
+      <StatisticsLine text="All" value={allClicks} />
+      <StatisticsLine text="Average" value={average.toFixed(2)} />
+      <StatisticsLine text="Positive Percentage" value={positivesPct.toFixed(2)} />
     </div>
   )
 }
+
+const CustomButton = ({ handleClick, texto }) => {
+  return <button onClick={handleClick}>{texto}</button>
+}
+
+const StatisticsLine = ({ text, value }) => {
+  return (
+      <p>{text} : {value}</p>
+
+  )
+}
+
 
 const App = () => {
   const [positives, setPositives] = useState(0)
@@ -48,9 +60,9 @@ const App = () => {
   return (
     <div>
       <h1>Give Feedback</h1>
-      <button onClick={() => buttonClick('good')}>Good</button>
-      <button onClick={() => buttonClick('neutral')}>Neutral</button>
-      <button onClick={() => buttonClick('bad')}>Bad</button>
+        <CustomButton handleClick={() => buttonClick('good')} texto="Good" />
+        <CustomButton handleClick={() => buttonClick('neutral')} texto="Neutral" />
+        <CustomButton handleClick={() => buttonClick('bad')} texto="Bad" />
 
       <Statistics
         positives={positives}
