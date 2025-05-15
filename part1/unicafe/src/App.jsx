@@ -38,7 +38,7 @@ const Statistics = ({ positives, neutrals, negatives, allClicks }) => {
 }
 
 const CustomButton = ({ handleClick, texto }) => {
-  return <button onClick={handleClick}>{texto}</button>
+  return <button style={{ marginRight: '10px' }} onClick={handleClick}>{texto}</button>
 }
 
 const StatisticsRow = ({ text, value }) => {
