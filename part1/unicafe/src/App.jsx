@@ -5,7 +5,15 @@ const Statistics = ({ positives, neutrals, negatives, allClicks }) => {
   // Calculate derived values directly in the render
   const average = allClicks > 0 ? (positives - negatives) / allClicks : 0
   const positivesPct = allClicks > 0 ? (positives / allClicks) * 100 : 0
-
+  
+  if (allClicks === 0) {
+    return (
+      <div>
+        <h1>Statistics</h1>
+        <h3>No feedback given, not enough data</h3>
+      </div>
+    )
+  }
   return (
     <div>
       <h1>Statistics</h1>
