@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 
 
 const RandomButton = ({ anecdotes, setSelected }) => {
@@ -9,6 +9,18 @@ const RandomButton = ({ anecdotes, setSelected }) => {
   return (
     <button onClick={handleClick}>
       Next anecdote
+    </button>
+  )
+}
+const VoteButton = ({ selected, setVotes, votes }) => {
+  const handleVote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+  }
+  return (
+    <button onClick={handleVote}>
+      Vote
     </button>
   )
 }
@@ -26,10 +38,14 @@ const App = () => {
     'Premature optimization is the root of all evil.',
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
-    'The only way to go fast, is to go well.'
+    'The only way to go fast, is to go well.',
+    'The only thing worse than a user who doesn\'t read the manual is a developer who doesn\'t read the spec.',
+    
   ]
+ 
+  const [selected, setSelected] = useState(0)  
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
-  const [selected, setSelected] = useState(0)
 
   return (
     <div>
@@ -37,6 +53,8 @@ const App = () => {
       {anecdotes[selected]} 
       </div>
       <RandomButton anecdotes={anecdotes} setSelected={setSelected} />
+      <VoteButton selected={selected} setVotes={setVotes} votes={votes} />
+      
     </div>
   )
 }
