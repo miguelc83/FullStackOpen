@@ -20,13 +20,26 @@ const VoteButton = ({ selected, setVotes, votes }) => {
   }
   return (
     <button onClick={handleVote}>
-      Vote
+      Like
     </button>
   )
 }
+const MostVotes = ({ anecdotes, maxVotes, mostVotedIndex }) => {
+  if (maxVotes === 0) {
+    return <p>No votes yet</p>
+  }
+  return (
+    <div>
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[mostVotedIndex]}</p>
+      <p>has {maxVotes} votes</p>
+    </div>
+  )
+}
 
-
-
+const Button = ({ handleClick, text }) => {
+  return <button onClick={handleClick}>{text}</button>
+}
 
 
 const App = () => {
@@ -45,16 +58,27 @@ const App = () => {
  
   const [selected, setSelected] = useState(0)  
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+  const maxVotes = Math.max(...votes)
+  const mostVotedIndex = votes.indexOf(maxVotes)
 
 
   return (
     <div>
       <div>
-      {anecdotes[selected]} 
+        <h1>Anecdote of the day</h1>
+      <p>{anecdotes[selected]} </p>
       </div>
-      <RandomButton anecdotes={anecdotes} setSelected={setSelected} />
-      <VoteButton selected={selected} setVotes={setVotes} votes={votes} />
-      
+      <Button handleClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))} text="Next anecdote" />
+      <Button handleClick={() => {
+        const newVotes = [...votes]
+        newVotes[selected] += 1
+        setVotes(newVotes)
+      }} text="Like" />
+
+      <div >
+        
+        <MostVotes anecdotes={anecdotes} maxVotes={maxVotes} mostVotedIndex={mostVotedIndex} />
+      </div>
     </div>
   )
 }
